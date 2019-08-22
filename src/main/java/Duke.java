@@ -11,9 +11,9 @@ public class Duke
 {
     public static void main(String[] args)
     {
-        String LineBreak = "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
-        System.out.println("Hello!\nI'm Duke\nWhat can i do for you?\n" + LineBreak);
-        String Input;
+        String LineBreak = "	_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
+        System.out.println("Hello!\nI'm Duke\nWhat can i do for you?\n" + LineBreak + "\n");
+        String Input = " ";
 		TaskList MyTaskList = new TaskList();
 		Scanner in = new Scanner(System.in);
         do
@@ -23,7 +23,12 @@ public class Duke
             if(Input.equals("list"))
             {
                 MyTaskList.PrintList();
-            }
+			}
+			else if(Input.matches("done \\d+"))
+			{
+				String[] Tokens = Input.split(" ");
+				MyTaskList.DoneTask(Tokens[1]);
+			}
             else if(!Input.equals("bye"))
             {
 				MyTaskList.NewTask(Input);
