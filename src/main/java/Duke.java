@@ -14,10 +14,10 @@ public class Duke
         String LineBreak = "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
         System.out.println("Hello!\nI'm Duke\nWhat can i do for you?\n" + LineBreak);
         String Input;
-        TaskList MyTaskList = new TaskList();
+		TaskList MyTaskList = new TaskList();
+		Scanner in = new Scanner(System.in);
         do
         {
-            Scanner in = new Scanner(System.in);
             Input = in.nextLine();
             System.out.println(LineBreak);
             if(Input.equals("list"))
@@ -29,7 +29,8 @@ public class Duke
 				MyTaskList.NewTask(Input);
 				System.out.println("	added: " + Input);
             }
-        }while(!Input.equals("bye"));
+		}while(!Input.equals("bye"));
+		in.close();
         System.out.println("	Bye. Hope to see you again soon!"+ "\n");
     }
 }
