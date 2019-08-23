@@ -29,11 +29,21 @@ public class Duke
 				String[] Tokens = Input.split(" ");
 				MyTaskList.DoneTask(Tokens[1]);
 			}
-            else if(!Input.equals("bye"))
+			else if(Input.matches("deadline (.*)"))
+			{
+				String[] Tokens = Input.replaceFirst("deadline ", "").split("/by");
+				MyTaskList.newDeadline(Tokens[0], Tokens[1]);
+			}
+			else if(Input.matches("event (.*)"))
+			{
+				String[] Tokens = Input.replaceFirst("event ", "").split("/at");
+				MyTaskList.newEvent(Tokens[0], Tokens[1]);
+			}
+            else if(Input.matches("todo (.*)"))
             {
-				MyTaskList.NewTask(Input);
-				System.out.println("	added: " + Input);
-            }
+				MyTaskList.newTodo(Input.replaceFirst("todo ", ""));
+			}
+			System.out.println(LineBreak);
 		}while(!Input.equals("bye"));
 		in.close();
         System.out.println("	Bye. Hope to see you again soon!"+ "\n");
