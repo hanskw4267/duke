@@ -1,33 +1,35 @@
 import java.io.Serializable;
+import java.util.Date;
 public class Task implements Serializable
 {
-	String Name;
-	String IsDone;
+	String name;
+	String isDone;
 
-	public Task(String Name)
+	public Task(String name)
 	{
-		this.Name = Name;
-		this.IsDone = "[" + "\u2718" + "] ";
+		this.name = name;
+		this.isDone = "[" + "\u2718" + "] ";
 	}
 
 	public String toString()
 	{
-		return IsDone + Name;
+		return isDone + name;
 	}
 	
 	public void markDone()
 	{
-		this.IsDone = "[" + "\u2713" + "] ";
+		this.isDone = "[" + "\u2713" + "] ";
 	}
 }
 
 class Todo extends Task implements Serializable
 {
 
-	public Todo(String Name)
+	public Todo(String name)
 	{
-		super(Name);
+		super(name);
 	}
+
 	@Override
 	public String toString()
 	{
@@ -37,27 +39,27 @@ class Todo extends Task implements Serializable
 
 class Deadline extends Task implements Serializable
 {
-	String DoneBy;
-	public Deadline(String Name, String DoneBy)
+	Date doneBy;
+	public Deadline(String name, Date doneBy)
 	{
-		super(Name);
-		this.DoneBy = DoneBy;
+		super(name);
+		this.doneBy = doneBy;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "[D]" + super.toString() + " (by: " + DoneBy + ")";
+		return "[D]" + super.toString() + " (by: " + doneBy + ")";
 	}
 }
 
 class Event extends Task implements Serializable
 {
-	String DoneAt;
-	public Event(String Name, String DoneBy)
+	Date DoneAt;
+	public Event(String name, Date doneAt)
 	{
-		super(Name);
-		this.DoneAt = DoneBy;
+		super(name);
+		this.DoneAt = doneAt;
 	}
 
 	@Override

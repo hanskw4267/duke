@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.util.Scanner;
 /*
     String logo = " ____        _        \n"
@@ -41,7 +42,7 @@ public class Duke
 					}
 					else
 					{
-						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (deadline <description> /by <time>)");
+						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (deadline <description> /by <time in dd/MM/yy HH/mm>)");
 					}
 				}
 
@@ -53,7 +54,7 @@ public class Duke
 					}
 					else
 					{
-						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time>)");
+						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time in dd/MM/yy HH/mm>)");
 					}
 				}
 
@@ -70,6 +71,10 @@ public class Duke
 			catch (TaskException e)
 			{
 				System.out.println(e.getMessage());
+			}
+			catch (ParseException e)
+			{
+				System.out.println("Time must be in the correct format of (dd/MM/yy HHmm)");
 			}
 			System.out.println(lineBreak);
 			Input = in.nextLine();

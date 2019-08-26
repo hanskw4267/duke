@@ -1,16 +1,20 @@
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 public class TaskList
 {
 	ArrayList<Task> myList = new ArrayList<Task>();
 	int NumOfTasks = 0;
 	File listFile = new File("./Tasks_List");
+	SimpleDateFormat dateFormatter= new SimpleDateFormat("dd/MM/yyyy HHmm");
 
-	public void addTodo(String Name) throws TaskException
+	public void addTodo(String name) throws TaskException
 	{
-		if(!Name.isBlank())
+		if(!name.isBlank())
 		{
-			myList.add(new Todo(Name));
+			myList.add(new Todo(name));
 			NumOfTasks++;
 			System.out.println("	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list");
 		}
@@ -19,11 +23,12 @@ public class TaskList
 			throw new TaskException("	OOPS!!! The description of a todo cannot be empty.");
 		}
 	}
-	public void addEvent(String Name, String DoneBy) throws TaskException
+	public void addEvent(String name, String doneAt) throws TaskException, ParseException
 	{
-		if(!Name.isBlank() && !DoneBy.isBlank())
+		if(!name.isBlank() && !doneAt.isBlank())
 		{
-			myList.add(new Event(Name, DoneBy));
+			Date doneAtDate = dateFormatter.parse(doneAt);
+			myList.add(new Event(name, doneAtDate));
 			NumOfTasks++;
 			System.out.println("	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list");
 		}
@@ -32,11 +37,12 @@ public class TaskList
 			throw new TaskException("	OOPS!!! The description and/or time of a event cannot be empty.");
 		}
 	}
-	public void addDeadline(String Name, String DoneBy) throws TaskException
+	public void addDeadline(String name, String doneBy) throws TaskException, ParseException
 	{
-		if(!Name.isBlank() && !DoneBy.isBlank())
+		if(!name.isBlank() && !doneBy.isBlank())
 		{
-			myList.add(new Deadline(Name, DoneBy));
+			Date doneByDate = dateFormatter.parse(doneBy);
+			myList.add(new Deadline(name, doneByDate));
 			NumOfTasks++;
 			System.out.println("	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list");
 		}
@@ -84,11 +90,12 @@ public class TaskList
 			fIS.close();
 			oIS.close();
 			this.NumOfTasks = this.myList.size();
-			System.out.println("			File Loaded");
+			System.out.println("		Tasks List Loaded");
 		}
 		catch (FileNotFoundException e)
 		{
 			this.listFile = new File("./Tasks_List");
+			System.out.println("		New Tasks List Created");
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -108,7 +115,7 @@ public class TaskList
             oOS.writeObject(myList);
             oOS.close();
 			fOS.close();
-			System.out.println("\n 			File saved\n");
+			System.out.println("\n 		Saved to file " + listFile.getName() + "\n");
 		}
 		catch (IOException e)
 		{
