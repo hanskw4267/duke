@@ -16,35 +16,63 @@ public class Duke
         String Input = " ";
 		TaskList MyTaskList = new TaskList();
 		Scanner in = new Scanner(System.in);
-        do
+        while(!Input.equals("bye"))
         {
-            Input = in.nextLine();
-            System.out.println(LineBreak);
-            if(Input.equals("list"))
-            {
-                MyTaskList.PrintList();
-			}
-			else if(Input.matches("done \\d+"))
+			try
 			{
-				String[] Tokens = Input.split(" ");
-				MyTaskList.DoneTask(Tokens[1]);
+				Input = in.nextLine();
+				System.out.println(LineBreak);
+
+				if(Input.equals("list"))
+				{
+					MyTaskList.PrintList();
+				}
+
+				else if(Input.matches("done\\d+"))
+				{
+					MyTaskList.DoneTask(Input.replaceFirst("done\\s*", ""));
+				}
+
+				else if(Input.matches("deadline(.*)"))
+				{
+					if(Input.matches("deadline.*/by.*"))
+					{
+						MyTaskList.newDeadline(Input.substring(8, Input.indexOf("/by")), Input.substring(Input.indexOf("/by")+3));
+					}
+					else
+					{
+						throw new TaskException("☹ OOPS!!! Invalid Input. Proper format is (deadline <description> /by <time>)");
+					}
+				}
+
+				else if(Input.matches("event(.*)"))
+				{
+					if(Input.matches("event.*/at.*"))
+					{
+						MyTaskList.newEvent(Input.substring(5, Input.indexOf("/at")), Input.substring(Input.indexOf("/at")+3));
+					}
+					else
+					{
+						throw new TaskException("☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time>)");
+					}
+				}
+
+				else if(Input.matches("todo(.*)"))
+				{
+					MyTaskList.newTodo(Input.replaceFirst("todo\\s*", ""));
+				}
+
+				else
+				{
+					throw new TaskException(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+				}
 			}
-			else if(Input.matches("deadline (.*)"))
+			catch (TaskException e)
 			{
-				String[] Tokens = Input.replaceFirst("deadline ", "").split("/by");
-				MyTaskList.newDeadline(Tokens[0], Tokens[1]);
-			}
-			else if(Input.matches("event (.*)"))
-			{
-				String[] Tokens = Input.replaceFirst("event ", "").split("/at");
-				MyTaskList.newEvent(Tokens[0], Tokens[1]);
-			}
-            else if(Input.matches("todo (.*)"))
-            {
-				MyTaskList.newTodo(Input.replaceFirst("todo ", ""));
+				System.out.println(e.getMessage());
 			}
 			System.out.println(LineBreak);
-		}while(!Input.equals("bye"));
+		}
 		in.close();
         System.out.println("	Bye. Hope to see you again soon!"+ "\n");
     }
