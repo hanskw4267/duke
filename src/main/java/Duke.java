@@ -11,37 +11,37 @@ public class Duke
 {
     public static void main(String[] args)
     {
-        String LineBreak = "	_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
-        System.out.println("Hello!\nI'm Duke\nWhat can i do for you?\n" + LineBreak + "\n");
-        String Input = " ";
-		TaskList MyTaskList = new TaskList();
+        String lineBreak = "	_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
+        System.out.println("Hello!\nI'm Duke\nWhat can i do for you?\n" + lineBreak + "\n");
+        String Input = "";
+		TaskList myTaskList = new TaskList();
+		myTaskList.loadList();
 		Scanner in = new Scanner(System.in);
+		Input = in.nextLine();
+		System.out.println(lineBreak);
         while(!Input.equals("bye"))
         {
 			try
 			{
-				Input = in.nextLine();
-				System.out.println(LineBreak);
-
 				if(Input.equals("list"))
 				{
-					MyTaskList.PrintList();
+					myTaskList.printList();
 				}
 
-				else if(Input.matches("done\\d+"))
+				else if(Input.matches("done \\d+"))
 				{
-					MyTaskList.DoneTask(Input.replaceFirst("done\\s*", ""));
+					myTaskList.doneTask(Input.replaceFirst("done\\s*", ""));
 				}
 
 				else if(Input.matches("deadline(.*)"))
 				{
 					if(Input.matches("deadline.*/by.*"))
 					{
-						MyTaskList.newDeadline(Input.substring(8, Input.indexOf("/by")), Input.substring(Input.indexOf("/by")+3));
+						myTaskList.addDeadline(Input.substring(8, Input.indexOf("/by")), Input.substring(Input.indexOf("/by")+3));
 					}
 					else
 					{
-						throw new TaskException("☹ OOPS!!! Invalid Input. Proper format is (deadline <description> /by <time>)");
+						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (deadline <description> /by <time>)");
 					}
 				}
 
@@ -49,30 +49,34 @@ public class Duke
 				{
 					if(Input.matches("event.*/at.*"))
 					{
-						MyTaskList.newEvent(Input.substring(5, Input.indexOf("/at")), Input.substring(Input.indexOf("/at")+3));
+						myTaskList.addEvent(Input.substring(5, Input.indexOf("/at")), Input.substring(Input.indexOf("/at")+3));
 					}
 					else
 					{
-						throw new TaskException("☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time>)");
+						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time>)");
 					}
 				}
 
 				else if(Input.matches("todo(.*)"))
 				{
-					MyTaskList.newTodo(Input.replaceFirst("todo\\s*", ""));
+					myTaskList.addTodo(Input.substring(4));
 				}
 
 				else
 				{
-					throw new TaskException(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+					throw new TaskException("	☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
 				}
 			}
 			catch (TaskException e)
 			{
 				System.out.println(e.getMessage());
 			}
-			System.out.println(LineBreak);
+			System.out.println(lineBreak);
+			Input = in.nextLine();
+			System.out.println(lineBreak);
 		}
+		myTaskList.saveList();
+		System.out.println(lineBreak);
 		in.close();
         System.out.println("	Bye. Hope to see you again soon!"+ "\n");
     }

@@ -1,4 +1,5 @@
-public class Task
+import java.io.Serializable;
+public class Task implements Serializable
 {
 	String Name;
 	String IsDone;
@@ -13,10 +14,16 @@ public class Task
 	{
 		return IsDone + Name;
 	}
+	
+	public void markDone()
+	{
+		this.IsDone = "[" + "\u2713" + "] ";
+	}
 }
 
-class Todo extends Task
+class Todo extends Task implements Serializable
 {
+
 	public Todo(String Name)
 	{
 		super(Name);
@@ -28,7 +35,7 @@ class Todo extends Task
 	}
 }
 
-class Deadline extends Task
+class Deadline extends Task implements Serializable
 {
 	String DoneBy;
 	public Deadline(String Name, String DoneBy)
@@ -44,7 +51,7 @@ class Deadline extends Task
 	}
 }
 
-class Event extends Task
+class Event extends Task implements Serializable
 {
 	String DoneAt;
 	public Event(String Name, String DoneBy)

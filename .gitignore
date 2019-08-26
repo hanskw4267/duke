@@ -15,3 +15,5 @@ bin/
 
 #Compilation
 *.class
+*.txt
+Tasks_List
