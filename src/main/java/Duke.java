@@ -32,6 +32,7 @@ public class Duke
 				else if(Input.matches("done \\d+"))
 				{
 					myTaskList.doneTask(Input.replaceFirst("done\\s*", ""));
+					myTaskList.saveList();
 				}
 
 				else if(Input.matches("deadline(.*)"))
@@ -42,8 +43,9 @@ public class Duke
 					}
 					else
 					{
-						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (deadline <description> /by <time in dd/MM/yy HH/mm>)");
+						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (deadline <description> /by <time in dd/MM/yyyy HH/mm>)");
 					}
+					myTaskList.saveList();
 				}
 
 				else if(Input.matches("event(.*)"))
@@ -54,13 +56,15 @@ public class Duke
 					}
 					else
 					{
-						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time in dd/MM/yy HH/mm>)");
+						throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time in dd/MM/yyyy HH/mm>)");
 					}
+					myTaskList.saveList();
 				}
 
 				else if(Input.matches("todo(.*)"))
 				{
 					myTaskList.addTodo(Input.substring(4));
+					myTaskList.saveList();
 				}
 
 				else
@@ -74,7 +78,7 @@ public class Duke
 			}
 			catch (ParseException e)
 			{
-				System.out.println("Time must be in the correct format of (dd/MM/yy HHmm)");
+				System.out.println("Time must be in the correct format of (dd/MM/yyyy HHmm)");
 			}
 			System.out.println(lineBreak);
 			Input = in.nextLine();

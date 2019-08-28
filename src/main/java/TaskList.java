@@ -115,7 +115,7 @@ public class TaskList
             oOS.writeObject(myList);
             oOS.close();
 			fOS.close();
-			System.out.println("\n 		Saved to file " + listFile.getName() + "\n");
+			// System.out.println("\n 		Saved to file " + listFile.getName() + "\n");
 		}
 		catch (IOException e)
 		{
