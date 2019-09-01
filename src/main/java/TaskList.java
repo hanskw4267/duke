@@ -23,6 +23,7 @@ public class TaskList
 			throw new TaskException("	OOPS!!! The description of a todo cannot be empty.");
 		}
 	}
+
 	public void addEvent(String name, String doneAt) throws TaskException, ParseException
 	{
 		if(!name.isBlank() && !doneAt.isBlank())
@@ -38,6 +39,7 @@ public class TaskList
 			throw new TaskException("	OOPS!!! The description and/or time of a event cannot be empty.");
 		}
 	}
+
 	public void addDeadline(String name, String doneBy) throws TaskException, ParseException
 	{
 		if(!name.isBlank() && !doneBy.isBlank())
@@ -53,6 +55,7 @@ public class TaskList
 			throw new TaskException("	OOPS!!! The description and/or time of a deadline cannot be empty.");
 		}
 	}
+
 	public void printList()
 	{
 		System.out.println("	Here are the tasks in your list:");
@@ -75,6 +78,23 @@ public class TaskList
 			myList.get(ListIndex).markDone();
 			System.out.println("	Nice! I have marked this task as done:");
 			System.out.println("	" + myList.get(ListIndex).toString());
+		}
+		else
+		{
+			throw new TaskException("	Invalid Task number!!!!");
+		}
+	}
+
+	
+	public void deleteTask(String Index) throws TaskException
+	{
+		int listIndex = Integer.parseInt(Index) - 1;
+		if(listIndex >= 0 && listIndex < NumOfTasks)
+		{
+			String msg = myList.get(listIndex).toString();
+			myList.remove(listIndex);
+			System.out.println("	Nice! I have removed this task:");
+			System.out.println("	" + msg  + "\n 	Now you have " + --NumOfTasks + " tasks in the list");
 		}
 		else
 		{
