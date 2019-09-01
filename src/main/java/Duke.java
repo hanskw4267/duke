@@ -34,6 +34,16 @@ public class Duke
                     myTaskList.doneTask(Input.replaceFirst("done\\s*", ""));
                     myTaskList.saveList();
                 }
+                
+                else if(Input.matches("find(.*)"))
+                {
+                    myTaskList.findTask(Input.replaceFirst("find\\s*", ""));
+                }
+
+                else if(Input.trim().matches("delete \\d+"))
+                {
+                    myTaskList.deleteTask(Input.replaceFirst("delete\\s*", ""));
+                }
 
                 else if(Input.trim().matches("deadline(.*)"))
                 {
@@ -58,7 +68,6 @@ public class Duke
                     {
                         throw new TaskException("	☹ OOPS!!! Invalid Input. Proper format is (event <description> /at <time in dd/MM/yyyy HH/mm>)");
                     }
-                    myTaskList.saveList();
                 }
 
                 else if(Input.trim().matches("todo(.*)"))
@@ -67,15 +76,9 @@ public class Duke
                     myTaskList.saveList();
                 }
 
-                else if(Input.trim().matches("delete \\d+"))
-                {
-                    myTaskList.deleteTask(Input.replaceFirst("delete\\s*", ""));
-                    myTaskList.saveList();
-                }
-
                 else
                 {
-                    throw new TaskException("    ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    throw new TaskException("	☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             }
             catch (TaskException e)
