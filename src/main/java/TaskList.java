@@ -9,21 +9,29 @@ public class TaskList
     int NumOfTasks = 0;
     File listFile = new File("./Tasks_List");
     SimpleDateFormat dateFormatter= new SimpleDateFormat("dd/MM/yyyy HHmm");
+    String output = "";
 
-    public void addTodo(String name) throws TaskException
+    public TaskList(ArrayList<Task> list)
+    {
+        this.myList = list;
+        this.NumOfTasks = list.size();
+    }
+    public String addTodo(String name) throws TaskException
     {
         if(!name.isBlank())
         {
             myList.add(new Todo(name));
             NumOfTasks++;
-            System.out.println("	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list");
+            output = "	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list";
         }
         else
         {
+            output = "";
             throw new TaskException("	OOPS!!! The description of a todo cannot be empty.");
         }
+        return output;
     }
-    public void addEvent(String name, String doneAt) throws TaskException, ParseException
+    public String addEvent(String name, String doneAt) throws TaskException, ParseException
     {
         if(!name.isBlank() && !doneAt.isBlank())
         {
@@ -31,14 +39,16 @@ public class TaskList
             Date doneAtDate = dateFormatter.parse(doneAt);
             myList.add(new Event(name, doneAtDate));
             NumOfTasks++;
-            System.out.println("	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list");
+            output = "	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list";
         }
         else
         {
+            output = "";
             throw new TaskException("	OOPS!!! The description and/or time of a event cannot be empty.");
         }
+        return output;
     }
-    public void addDeadline(String name, String doneBy) throws TaskException, ParseException
+    public String addDeadline(String name, String doneBy) throws TaskException, ParseException
     {
         if(!name.isBlank() && !doneBy.isBlank())
         {
@@ -46,117 +56,82 @@ public class TaskList
             Date doneByDate = dateFormatter.parse(doneBy);
             myList.add(new Deadline(name, doneByDate));
             NumOfTasks++;
-            System.out.println("	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list");
+            output = "	Got it. I've added this task:\n 	" + myList.get(NumOfTasks-1).toString() + "\n 	Now you have " + NumOfTasks + " tasks in the list";
         }
         else
         {
+            output = "";
             throw new TaskException("	OOPS!!! The description and/or time of a deadline cannot be empty.");
         }
+        return output;
     }
-    public void printList()
+    public String printList()
     {
-        System.out.println("	Here are the tasks in your list:");
+        output = "        Here are the tasks in your list:\n";
         if(NumOfTasks == 0)
         {
-            System.out.println("	Nothing here mate");
+            output += " 	Nothing here mate\n";
         }
         for(int i = 0; i < NumOfTasks; i++)
         {
             int index = i + 1;
-            System.out.println("	" + index + "." + myList.get(i).toString());
+            output += " 	" + index + "." + myList.get(i).toString() + "\n";
         }
+        return output;
     }
 
-    public void doneTask(String Index) throws TaskException
+    public String doneTask(String Index) throws TaskException
     {
         int ListIndex = Integer.parseInt(Index) - 1;
         if(ListIndex >= 0 && ListIndex < NumOfTasks)
         {
             myList.get(ListIndex).markDone();
-            System.out.println("	Nice! I have marked this task as done:");
-            System.out.println("	" + myList.get(ListIndex).toString());
+            output = "	Nice! I have marked this task as done:";
+            output += "	" + myList.get(ListIndex).toString();
         }
         else
         {
+            output = "";
             throw new TaskException("	Invalid Task number!!!!");
         }
+        return output;
     }
 
-    public void findTask(String query)
+    public String findTask(String query)
     {
-        System.out.println("        Here are the matching tasks in your list:\n");
+        output = "        Here are the matching tasks in your list:\n";
         int i = 0;
         for (Task  item : myList)
         {
             if(item.name.contains(query))
             {
                 i = myList.indexOf(item) + 1;
-                System.out.println("        " + i + "." +  item.toString());
+                output += "        " + i + "." +  item.toString() + "\n";
             }
         }
         if(i == 0)
         {
-            System.out.println("        No tasks matches your query");
+            output += "        No tasks matches your query";
         }
+        return output;
     }
 
 	
-	public void deleteTask(String Index) throws TaskException
+	public String deleteTask(String Index) throws TaskException
 	{
 		int listIndex = Integer.parseInt(Index) - 1;
 		if(listIndex >= 0 && listIndex < NumOfTasks)
 		{
 			String msg = myList.get(listIndex).toString();
 			myList.remove(listIndex);
-			System.out.println("	Nice! I have removed this task:");
-			System.out.println("	" + msg  + "\n 	Now you have " + --NumOfTasks + " tasks in the list");
+			output = "	Nice! I have removed this task:";
+			output +="	" + msg  + "\n 	Now you have " + --NumOfTasks + " tasks in the list";
 		}
 		else
 		{
+            output = "";
 			throw new TaskException("	Invalid Task number!!!!");
-		}
-	}
-
-	public void loadList()
-	{
-		try
-		{
-			FileInputStream fIS = new FileInputStream(listFile);
-			ObjectInputStream oIS = new ObjectInputStream(fIS);
-			this.myList = (ArrayList<Task>) oIS.readObject();
-			fIS.close();
-			oIS.close();
-			this.NumOfTasks = this.myList.size();
-			System.out.println("		Tasks List Loaded");
-		}
-		catch (FileNotFoundException e)
-		{
-			this.listFile = new File("./Tasks_List");
-			System.out.println("		New Tasks List Created");
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		catch (ClassNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-	}
-
-    public void saveList()
-    {
-        try
-        {
-            FileOutputStream fOS = new FileOutputStream(listFile);
-            ObjectOutputStream oOS = new ObjectOutputStream(fOS);
-            oOS.writeObject(myList);
-            oOS.close();
-            fOS.close();
-            // System.out.println("\n 		Saved to file " + listFile.getName() + "\n");
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+        return output;
+	}
 }
