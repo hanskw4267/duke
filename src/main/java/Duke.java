@@ -78,7 +78,7 @@ public class Duke
 			}
 			catch (ParseException e)
 			{
-				System.out.println("Time must be in the correct format of (dd/MM/yyyy HHmm)");
+				System.out.println("Invalid time given, please give a valid time input in the correct format of (dd/MM/yyyy HHmm)");
 			}
 			System.out.println(lineBreak);
 			Input = in.nextLine();

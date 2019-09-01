@@ -27,6 +27,7 @@ public class TaskList
 	{
 		if(!name.isBlank() && !doneAt.isBlank())
 		{
+			dateFormatter.setLenient(false);
 			Date doneAtDate = dateFormatter.parse(doneAt);
 			myList.add(new Event(name, doneAtDate));
 			NumOfTasks++;
@@ -41,6 +42,7 @@ public class TaskList
 	{
 		if(!name.isBlank() && !doneBy.isBlank())
 		{
+			dateFormatter.setLenient(false);
 			Date doneByDate = dateFormatter.parse(doneBy);
 			myList.add(new Deadline(name, doneByDate));
 			NumOfTasks++;
