@@ -1,10 +1,24 @@
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * This class is used to load and store the current needed tasks list
+ * from memory
+ * 
+ * @author Hans kurnia
+ * 
+ */
 public class Storage
 {
-    File listFile = new File("./Tasks_List");
-    ArrayList<Task> myList = new ArrayList<Task>();
+    private File listFile = new File("./Tasks_List");
+    private ArrayList<Task> myList = new ArrayList<Task>();
+
+    /**
+     * this method attempts to load a exiting list from memory, 
+     * failing which it creates a new one
+     * 
+     * @return the loaded list of tasks
+     */
     public ArrayList<Task> loadList()
 	{
 		try
@@ -14,12 +28,10 @@ public class Storage
 			this.myList = (ArrayList<Task>) oIS.readObject();
 			fIS.close();
             oIS.close();
-            System.out.println("		Tasks List Loaded");
 		}
 		catch (FileNotFoundException e)
 		{
 			this.listFile = new File("./Tasks_List");
-			System.out.println("		New Tasks List Created");
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -31,6 +43,12 @@ public class Storage
         return myList;
 	}
 
+    /**
+     * This method attempts to save a given tasks list to memory
+     * 
+     * @param list the current loaded task list
+     * @return the file that list was saved to
+     */
     public File saveList(ArrayList<Task> list)
     {
         try

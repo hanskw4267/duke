@@ -1,18 +1,19 @@
-
+/**
+ * This is the main class we use to interacting with Duke
+ * 
+ * @author Hans Kurnia
+ */
 public class Duke
 {   
-    Storage storage;
-    TaskList myTaskList;
-    CommandParser cmdParser;
-    Ui ui;
+    private Storage storage;
+    private TaskList myTaskList;
+    private Ui ui;
     
     public Duke()
     {
         storage = new Storage();
         myTaskList = new TaskList(storage.loadList());
-        cmdParser = new CommandParser();
         ui = new Ui();
-        
     }
 
     public void run()
@@ -24,12 +25,13 @@ public class Duke
 
         while(!Input.equals("bye"))
         {
-            cmd = cmdParser.parseCommand(Input);
+            cmd = CommandParser.parseCommand(Input);
             cmd.executeCmd(storage, myTaskList, ui);
             Input = ui.readInput();
         }
         ui.showGoodbye(storage, myTaskList);
     }
+
     public static void main(String[] args)
     {
         new Duke().run();

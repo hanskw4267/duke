@@ -1,8 +1,17 @@
 import java.io.Serializable;
-public class Task implements Serializable
+
+/**
+ * This class is the super abstract class to store tasks
+ * 
+ * @author Hans kurnia
+ */
+public abstract class Task implements Serializable
 {
-	String name;
-	String isDone;
+    /**
+     *  The description and status of a given task
+     */
+	private String name;
+	private String isDone;
 
 	public Task(String name)
 	{
@@ -18,5 +27,10 @@ public class Task implements Serializable
 	public void markDone()
 	{
 		this.isDone = "[" + "\u2713" + "] ";
-	}
+    }
+    
+    public String getName()
+    {
+        return name;
+    }
 }

@@ -1,3 +1,9 @@
+/**
+ * This Enum class contains the definitions for different command types
+ * 
+ * @author Hans kurnia
+ */
+
 public enum Commandtype
 {
     ADDTODO,

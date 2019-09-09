@@ -1,6 +1,18 @@
+/**
+ * This method class is used to make sense of user input commands
+ * 
+ * @author Hans kurnia
+ */
 public class CommandParser
 {
-    public Command parseCommand(String Input)
+    /**
+     * method attempts to make sense of a given input
+     * 
+     * @param Input raw user input command
+     * @return the processed command 
+     * @see Command
+     */
+    public static Command parseCommand(String Input)
     {
         Command cmd = new Command(Commandtype.UNKNOWN, Input);
         try

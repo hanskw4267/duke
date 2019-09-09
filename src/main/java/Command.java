@@ -1,9 +1,14 @@
 import java.text.ParseException;
 
+/**
+ * Command is the class that stores and executes the user command input
+ * 
+ * @author Hans kurnia
+ */
 public class Command
 {
-    Commandtype type;
-    String cmd;
+    private Commandtype type;
+    private String cmd;
     
     public Command(Commandtype type, String cmd)
     {
@@ -11,6 +16,13 @@ public class Command
         this.cmd = cmd;
     } 
 
+    /**
+     * method to execute a given input command
+     * 
+     * @param storage the configuration for storing task list 
+     * @param taskList the task list containing current loaded list
+     * @param ui the current user interface
+     */
     public void executeCmd(Storage storage, TaskList taskList, Ui ui)
     {
         String output = "";
@@ -26,23 +38,23 @@ public class Command
                     break;
                 case DELETETASK :
                     output = taskList.deleteTask(cmd);
-                    storage.saveList(taskList.myList);
+                    storage.saveList(taskList.getList());
                     break;
                 case MARKDONE :
                     output = taskList.doneTask(cmd);
-                    storage.saveList(taskList.myList);
+                    storage.saveList(taskList.getList());
                     break;
                 case ADDDEADLINE :
                     output = taskList.addDeadline(cmd.substring(8, cmd.indexOf("/by")), cmd.substring(cmd.indexOf("/by")+3));
-                    storage.saveList(taskList.myList);
+                    storage.saveList(taskList.getList());
                     break;
                 case ADDEVENT :
                     output = taskList.addEvent(cmd.substring(5, cmd.indexOf("/at")), cmd.substring(cmd.indexOf("/at")+3));
-                    storage.saveList(taskList.myList);
+                    storage.saveList(taskList.getList());
                     break;
                 case ADDTODO :
                     output = taskList.addTodo(cmd);
-                    storage.saveList(taskList.myList);
+                    storage.saveList(taskList.getList());
                     break;
                 case UNKNOWN :
                     output = "        ☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
