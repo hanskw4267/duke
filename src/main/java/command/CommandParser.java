@@ -1,3 +1,7 @@
+package command;
+
+import exception.TaskException;
+
 /**
  * This method class is used to make sense of user input commands
  * 

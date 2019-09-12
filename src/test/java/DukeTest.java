@@ -1,10 +1,12 @@
+import command.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DukeTest
 {
     @Test
-    public void dummyTest()
+    public void test_todo()
     {
-        assertEquals(2,2);
+        Command cmd = new Command(Commandtype.LISTTASK, "list");
+        assertEquals(cmd, CommandParser("list"));
     }
 }

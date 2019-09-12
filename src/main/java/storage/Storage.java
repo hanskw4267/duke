@@ -1,5 +1,8 @@
+package storage;
+
 import java.io.*;
 import java.util.ArrayList;
+import task.Task;
 
 /**
  * This class is used to load and store the current needed tasks list
